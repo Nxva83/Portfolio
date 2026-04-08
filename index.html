@@ -4,523 +4,723 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gabriel Spanneut-Peressutti | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --accent-color: #4fc3dc;
-            --text-color: #333;
-            --light-bg: #f8f9fa;
-            --dark-bg: #2d3748;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --cream: #f5f0e8;
+            --dark: #0f0e0c;
+            --ink: #1a1916;
+            --rust: #c4451a;
+            --gold: #d4a847;
+            --muted: #7a7568;
+            --border: rgba(26,25,22,0.12);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
+            background-color: var(--cream);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            cursor: none;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
+
+        /* Custom cursor */
+        .cursor {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: var(--rust);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            mix-blend-mode: multiply;
         }
-        
-        header {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 2rem 0;
+        .cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1.5px solid var(--rust);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.18s ease;
+            opacity: 0.5;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.5rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            mix-blend-mode: multiply;
+        }
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s;
+            cursor: none;
+        }
+        .nav-links a:hover { color: var(--rust); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             position: relative;
             overflow: hidden;
         }
-        
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(74, 111, 165, 0.7), rgba(22, 96, 136, 0.7));
-            z-index: 1;
-        }
-        
-        .header-content {
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 8rem 4rem 6rem;
             position: relative;
             z-index: 2;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: 1.5rem;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid var(--accent-color);
-            margin-bottom: 20px;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: var(--dark-bg);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            max-width: 600px;
-        }
-        
-        .contact-info {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .contact-info a:hover {
-            color: var(--accent-color);
-        }
-        
-        nav {
-            background-color: white;
-            box-shadow: var(--box-shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            padding: 1rem 0;
-        }
-        
-        .nav-list {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-list a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-list a:hover {
-            color: var(--secondary-color);
-            background-color: rgba(79, 195, 220, 0.1);
-        }
-        
-        section {
-            padding: 4rem 0;
-        }
-        
-        section h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: var(--secondary-color);
-            position: relative;
-        }
-        
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--accent-color);
-        }
-        
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .info-item {
-            margin-bottom: 15px;
-        }
-        
-        .info-item strong {
-            color: var(--secondary-color);
-        }
-        
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .skill-category {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .skill-category:hover {
-            transform: translateY(-5px);
-        }
-        
-        .skill-category h3 {
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .skill-list {
-            list-style: none;
-        }
-        
-        .skill-list li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .skill-list li::before {
-            content: '•';
-            color: var(--accent-color);
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .project-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .project-img {
-            height: 200px;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #777;
-        }
-        
-        .project-content {
-            padding: 1.5rem;
-        }
-        
-        .project-title {
-            color: var(--secondary-color);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        
-        .tag {
-            background-color: rgba(79, 195, 220, 0.2);
-            color: var(--secondary-color);
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-        
-        .education-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .education-timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 2px;
-            height: 100%;
-            background-color: var(--accent-color);
-            transform: translateX(-50%);
-        }
-        
-        .timeline-item {
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: var(--box-shadow);
-            width: calc(50% - 30px);
-            position: relative;
-            margin-bottom: 2rem;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            margin-left: auto;
-        }
-        
-        .timeline-item:nth-child(odd)::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 20px;
-            width: 30px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        .timeline-item:nth-child(even)::before {
-            content: '';
-            position: absolute;
-            right: -30px;
-            top: 20px;
-            width: 30px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: white;
-            border: 2px solid var(--accent-color);
-        }
-        
-        .timeline-item:nth-child(odd)::after {
-            left: -36px;
-        }
-        
-        .timeline-item:nth-child(even)::after {
-            right: -36px;
-        }
-        
-        .timeline-year {
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .timeline-content h3 {
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-        
-        footer {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 1rem;
         }
-        
-        .footer-social {
-            display: flex;
-            gap: 15px;
+        .hero-eyebrow::before {
+            content: '';
+            width: 40px; height: 1px;
+            background: var(--rust);
+            display: inline-block;
         }
-        
-        .footer-social a {
-            color: white;
-            text-decoration: none;
+
+        .hero-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            line-height: 1.0;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+        }
+        .hero-name span {
+            display: block;
+            color: var(--rust);
+        }
+
+        .hero-bio {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 420px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 3rem;
+        }
+        .hero-contact-item {
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            color: var(--ink);
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: background-color 0.3s ease;
+            gap: 0.8rem;
+            text-decoration: none;
+            cursor: none;
         }
-        
-        .footer-social a:hover {
-            background-color: var(--accent-color);
+        .hero-contact-item svg { color: var(--rust); flex-shrink: 0; }
+        .hero-contact-item:hover { color: var(--rust); }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--ink);
+            color: var(--cream);
+            padding: 1rem 2rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            transition: background 0.3s, gap 0.3s;
+            cursor: none;
+            align-self: flex-start;
         }
-        
-        @media (max-width: 768px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-list {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }
-            
-            .education-timeline::before,
-            .timeline-item::before,
-            .timeline-item::after {
-                display: none;
-            }
+        .hero-cta:hover { background: var(--rust); gap: 1.4rem; }
+        .hero-cta span { transition: transform 0.3s; }
+
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-img-wrap {
+            position: absolute;
+            inset: 0;
+        }
+        .hero-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: grayscale(20%) contrast(1.05);
+        }
+        .hero-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                var(--cream) 0%,
+                rgba(245,240,232,0.2) 30%,
+                transparent 70%
+            );
+        }
+        .hero-img-grain {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            mix-blend-mode: multiply;
+        }
+
+        /* STAT BAR */
+        .stat-bar {
+            display: flex;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stat-item {
+            flex: 1;
+            padding: 2rem 4rem;
+            border-right: 1px solid var(--border);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 4rem; }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        .section-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--rust);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            color: var(--ink);
+            line-height: 1.1;
+        }
+
+        /* ABOUT */
+        #about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+        .about-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--border);
+        }
+        .about-detail-item {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+        .about-detail-item:nth-child(even) { border-right: none; }
+        .about-detail-item:nth-last-child(-n+2) { border-bottom: none; }
+        .detail-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.3rem;
+        }
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--ink);
+            font-weight: 400;
+        }
+        .about-text p {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+        .about-text p:last-child { margin-bottom: 0; }
+
+        /* SKILLS */
+        #skills { background-color: var(--ink); }
+        #skills .section-title { color: var(--cream); }
+        #skills .section-label { color: var(--gold); }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .skill-block {
+            padding: 2.5rem;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: background 0.3s;
+        }
+        .skill-block:nth-child(4n) { border-right: none; }
+        .skill-block:hover { background: rgba(255,255,255,0.04); }
+        .skill-block-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        .skill-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .skill-list li {
+            font-size: 0.9rem;
+            color: rgba(245,240,232,0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 300;
+        }
+        .skill-list li::before {
+            content: '';
+            width: 16px; height: 1px;
+            background: var(--rust);
+            flex-shrink: 0;
+        }
+
+        /* PROJECTS */
+        .projects-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+        }
+        .project-card {
+            padding: 3rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+            cursor: none;
+        }
+        .project-card:nth-child(2n) { border-right: none; }
+        .project-card:nth-last-child(-n+2) { border-bottom: none; }
+        .project-card:hover { background: rgba(196,69,26,0.03); }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 3px; height: 0;
+            background: var(--rust);
+            transition: height 0.4s ease;
+        }
+        .project-card:hover::before { height: 100%; }
+
+        .project-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+        .project-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--ink);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            transition: color 0.2s;
+            cursor: none;
+        }
+        .project-title:hover { color: var(--rust); }
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.6rem;
+            color: var(--muted);
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* EDUCATION */
+        #education { background: #f0ebe0; }
+        .edu-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .edu-item {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 3rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+        .edu-item:first-child { border-top: 1px solid var(--border); }
+        .edu-year {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--rust);
+            padding-top: 0.2rem;
+        }
+        .edu-content h3 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+        .edu-org {
+            font-size: 0.82rem;
+            color: var(--rust);
+            margin-bottom: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+        .edu-desc {
+            font-size: 0.88rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        /* CONTACT */
+        #contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+        .contact-big {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.0;
+            color: var(--ink);
+        }
+        .contact-big em {
+            font-style: normal;
+            color: var(--rust);
+        }
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s, background 0.3s;
+            cursor: none;
+        }
+        .contact-link:hover {
+            border-color: var(--rust);
+            background: rgba(196,69,26,0.04);
+        }
+        .contact-link-icon {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--rust);
+            color: white;
+            flex-shrink: 0;
+        }
+        .contact-link-text .cl-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 0.1rem;
+        }
+        .contact-link-text .cl-value {
+            font-size: 0.88rem;
+            color: var(--ink);
+            font-weight: 400;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--ink);
+            color: rgba(245,240,232,0.4);
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+        footer span { font-family: 'Syne', sans-serif; }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-left > * {
+            animation: fadeUp 0.8s ease both;
+        }
+        .hero-eyebrow { animation-delay: 0.1s; }
+        .hero-name { animation-delay: 0.25s; }
+        .hero-bio { animation-delay: 0.4s; }
+        .hero-contacts { animation-delay: 0.5s; }
+        .hero-cta { animation-delay: 0.6s; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            nav { padding: 1.2rem 2rem; }
+            .hero { grid-template-columns: 1fr; min-height: auto; }
+            .hero-left { padding: 7rem 2rem 3rem; }
+            .hero-right { height: 60vw; }
+            .hero-img-overlay { background: linear-gradient(to bottom, transparent 30%, var(--cream)); }
+            section { padding: 4rem 2rem; }
+            #about { grid-template-columns: 1fr; gap: 3rem; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .skill-block:nth-child(2n) { border-right: none; }
+            .skill-block:nth-child(4n) { border-right: 1px solid rgba(255,255,255,0.08); }
+            .skill-block:nth-child(4) { border-right: none !important; }
+            .projects-layout { grid-template-columns: 1fr; }
+            .project-card:nth-child(2n) { border-right: 1px solid var(--border); }
+            .project-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+            .project-card:last-child { border-bottom: none; }
+            #contact { grid-template-columns: 1fr; gap: 3rem; }
+            .stat-item { padding: 1.5rem 2rem; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .nav-links { display: none; }
+            .edu-item { grid-template-columns: 1fr; gap: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="profile-img">GP</div>
-            <h1>Gabriel Spanneut-Peressutti</h1>
-            <p class="tagline">Étudiant en Développement Informatique à Epitech | Passionné de Programmation et de Cybersécurité</p>
-            <div class="contact-info">
-                <a href="mailto:gabriel.spanneut-peressutti@epitech.eu">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                    </svg>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <nav>
+        <div class="nav-logo">GSP</div>
+        <ul class="nav-links">
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#skills">Compétences</a></li>
+            <li><a href="#projects">Projets</a></li>
+            <li><a href="#education">Formation</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-left">
+            <div class="hero-eyebrow">Étudiant Epitech · Nice</div>
+            <h1 class="hero-name">
+                Gabriel<br>
+                Spanneut-<span>Peressutti</span>
+            </h1>
+            <p class="hero-bio">Développeur passionné par la programmation système et la cybersécurité. En formation au Programme Grande École Epitech 2024–2029.</p>
+            <div class="hero-contacts">
+                <a class="hero-contact-item" href="mailto:gabriel.spanneut-peressutti@epitech.eu">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>
                     gabriel.spanneut-peressutti@epitech.eu
                 </a>
-                <a href="tel:+33617750003">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
-                    </svg>
+                <a class="hero-contact-item" href="tel:+33617750003">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>
                     06 17 75 00 03
                 </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                    </svg>
-                    06200 Nice
-                </a>
+                <span class="hero-contact-item">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                    06200 Nice, France
+                </span>
+            </div>
+            <a href="#projects" class="hero-cta">Voir mes projets <span>→</span></a>
+        </div>
+        <div class="hero-right">
+            <div class="hero-img-wrap">
+                <img class="hero-photo" src="data:image/jpeg;base64,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" alt="Gabriel Spanneut-Peressutti">
+                <div class="hero-img-overlay"></div>
+                <div class="hero-img-grain"></div>
             </div>
         </div>
-    </header>
-    
-    <nav>
-        <div class="container nav-container">
-            <ul class="nav-list">
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#skills">Compétences</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#education">Formation</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    </div>
+
+    <!-- STAT BAR -->
+    <div class="stat-bar">
+        <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Projets réalisés</div>
         </div>
-    </nav>
-    
+        <div class="stat-item">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Langues maîtrisées</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Années de formation</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">2029</div>
+            <div class="stat-label">Diplôme Epitech</div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
     <section id="about">
-        <div class="container">
-            <h2>À propos de moi</h2>
-            <div class="about-content">
-                <div>
-                    <div class="info-item">
-                        <strong>Nom:</strong> Gabriel Spanneut-Peressutti
-                    </div>
-                    <div class="info-item">
-                        <strong>Études:</strong> Epitech - Programme Grande École
-                    </div>
-                    <div class="info-item">
-                        <strong>Langues:</strong> Français (C2), Anglais (C1), Italien (B1)
-                    </div>
-                    <div class="info-item">
-                        <strong>Localisation:</strong> Nice, France
-                    </div>
-                    <div class="info-item">
-                        <strong>Intérêts:</strong> CSS, Boxe Anglaise, Programmation, Cinéma
-                    </div>
+        <div>
+            <div class="section-header">
+                <span class="section-label">01 — Profil</span>
+                <h2 class="section-title">À propos<br>de moi</h2>
+            </div>
+            <div class="about-detail">
+                <div class="about-detail-item">
+                    <div class="detail-label">Formation</div>
+                    <div class="detail-value">Epitech PGE</div>
                 </div>
-                <div>
-                    <p>
-                        Je suis étudiant à Epitech dans le cadre du Programme Grande École (2024-2029), passionné par le développement informatique et la cybersécurité. Mon parcours académique à Epitech me permet d'acquérir des compétences techniques solides tout en développant une approche pratique à travers différents projets.
-                    </p>
-                    <br>
-                    <p>
-                        En dehors de mes études, je suis activement impliqué dans des activités d'animation pour les jeunes, ayant obtenu la certification d'Animateur d'Activités pour la Jeunesse. Je m'intéresse également à la boxe anglaise et au cinéma, des domaines qui m'aident à développer ma discipline et ma créativité.
-                    </p>
-                    <br>
-                    <p>
-                        Mon objectif est de continuer à élargir mes compétences en développement informatique et en cybersécurité pour devenir un professionnel polyvalent dans le domaine des technologies de l'information.
-                    </p>
+                <div class="about-detail-item">
+                    <div class="detail-label">Localisation</div>
+                    <div class="detail-value">Nice, France</div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="detail-label">Langues</div>
+                    <div class="detail-value">FR · EN · IT</div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="detail-label">Disponibilité</div>
+                    <div class="detail-value">2024–2029</div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="detail-label">Intérêts</div>
+                    <div class="detail-value">Cybersécurité</div>
+                </div>
+                <div class="about-detail-item">
+                    <div class="detail-label">Loisirs</div>
+                    <div class="detail-value">Boxe · Cinéma</div>
                 </div>
             </div>
+        </div>
+        <div class="about-text">
+            <p>Je suis étudiant à Epitech dans le cadre du Programme Grande École (2024–2029), passionné par le développement informatique et la cybersécurité. Mon parcours me permet d'acquérir des compétences techniques solides à travers une pédagogie par projets.</p>
+            <p>En dehors du code, je suis activement impliqué dans l'animation de jeunes — certifié Animateur d'Activités pour la Jeunesse. La boxe anglaise et le cinéma m'apportent discipline et créativité.</p>
+            <p>Mon objectif : devenir un professionnel polyvalent dans les technologies de l'information, avec une spécialisation en cybersécurité.</p>
         </div>
     </section>
-    
-    <section id="skills" style="background-color: rgba(79, 195, 220, 0.05);">
+
+    <!-- SKILLS -->
+    <section id="skills">
         <div class="container">
-            <h2>Compétences</h2>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Langages de programmation</h3>
+            <div class="section-header">
+                <span class="section-label">02 — Expertise</span>
+                <h2 class="section-title">Compétences</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-block">
+                    <div class="skill-block-title">Langages</div>
                     <ul class="skill-list">
                         <li>C</li>
                         <li>Python</li>
-                        <li>HTML</li>
-                        <li>CSS</li>
+                        <li>HTML / CSS</li>
                         <li>JavaScript</li>
-                        <li>Blueprint (Unreal Engine)</li>
+                        <li>Blueprint (Unreal)</li>
                     </ul>
                 </div>
-                <div class="skill-category">
-                    <h3>Outils & Technologies</h3>
+                <div class="skill-block">
+                    <div class="skill-block-title">Outils & DevOps</div>
                     <ul class="skill-list">
                         <li>Docker</li>
                         <li>GitHub Actions</li>
                         <li>Shell scripting</li>
-                        <li>Unreal Engine</li>
                         <li>Tests automatisés</li>
+                        <li>Unreal Engine</li>
                     </ul>
                 </div>
-                <div class="skill-category">
-                    <h3>Compétences personnelles</h3>
+                <div class="skill-block">
+                    <div class="skill-block-title">Soft Skills</div>
                     <ul class="skill-list">
                         <li>Organisation d'événements</li>
                         <li>Animation de groupes</li>
@@ -529,127 +729,187 @@
                         <li>Résolution de problèmes</li>
                     </ul>
                 </div>
-                <div class="skill-category">
-                    <h3>Langues</h3>
+                <div class="skill-block">
+                    <div class="skill-block-title">Langues</div>
                     <ul class="skill-list">
-                        <li>Français (C2) - Natif</li>
-                        <li>Anglais (C1) - Avancé</li>
-                        <li>Italien (B1) - Intermédiaire</li>
+                        <li>Français — C2 Natif</li>
+                        <li>Anglais — C1 Avancé</li>
+                        <li>Italien — B1 Intermédiaire</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- PROJECTS -->
     <section id="projects">
         <div class="container">
-            <h2>Mes Projets</h2>
-            <div class="projects-grid">
+            <div class="section-header">
+                <span class="section-label">03 — Réalisations</span>
+                <h2 class="section-title">Mes projets</h2>
+            </div>
+            <div class="projects-layout">
                 <div class="project-card">
-                    <div class="project-img">
-                        [Image à venir]
-                    </div>
-                    <div class="project-content">
-                        <a href="https://github.com/Nxva83/42sh"class="project-title">42sh</a>
-                        <p>Recréation du terminal tcsh avec ses fonctionnalités principales. Ce projet m'a permis de comprendre en profondeur le fonctionnement d'un shell et d'améliorer mes compétences en programmation C.</p>
-                        <div class="project-tags">
-                            <span class="tag">C</span>
-                            <span class="tag">Shell</span>
-                            <span class="tag">Système</span>
-                        </div>
+                    <div class="project-num">Projet 01</div>
+                    <a href="https://github.com/Nxva83/42sh" class="project-title">42sh</a>
+                    <p class="project-desc">Recréation complète du terminal tcsh avec ses fonctionnalités principales. Une plongée profonde dans le fonctionnement des shells Unix et la programmation système en C.</p>
+                    <div class="project-tags">
+                        <span class="tag">C</span>
+                        <span class="tag">Shell</span>
+                        <span class="tag">Système</span>
                     </div>
                 </div>
-                
                 <div class="project-card">
-                    <div class="project-img">
-                        [Image à venir]
-                    </div>
-                    <div class="project-content">
-                        <a href="https://github.com/Nxva83/Popeye"class="project-title">Popeye</a>
-                        <p>Projet de mise en place d'interactions entre conteneurs Docker pour une application de vote et de résultats. Ce projet m'a permis de développer mes compétences en conteneurisation et en architecture distribuée.</p>
-                        <div class="project-tags">
-                            <span class="tag">Docker</span>
-                            <span class="tag">Microservices</span>
-                            <span class="tag">DevOps</span>
-                        </div>
+                    <div class="project-num">Projet 02</div>
+                    <a href="https://github.com/Nxva83/Popeye" class="project-title">Popeye</a>
+                    <p class="project-desc">Architecture microservices Docker pour une application de vote et résultats. Développement des compétences en conteneurisation et architecture distribuée.</p>
+                    <div class="project-tags">
+                        <span class="tag">Docker</span>
+                        <span class="tag">Microservices</span>
+                        <span class="tag">DevOps</span>
                     </div>
                 </div>
-                
                 <div class="project-card">
-                    <div class="project-img">
-                        [Image à venir]
-                    </div>
-                    <div class="project-content">
-                        <a href="https://github.com/Nxva83/Wolf3D/tree/main"class="project-title">WolfD</a>
-                        <p>Jeu vidéo inspiré de la série Wolfenstein, développé avec la technique du Raycasting. Ce projet m'a permis d'appliquer des concepts de mathématiques et de graphisme à la programmation de jeux.</p>
-                        <div class="project-tags">
-                            <span class="tag">C</span>
-                            <span class="tag">Raycasting</span>
-                            <span class="tag">Jeu vidéo</span>
-                        </div>
+                    <div class="project-num">Projet 03</div>
+                    <a href="https://github.com/Nxva83/Wolf3D/tree/main" class="project-title">WolfD</a>
+                    <p class="project-desc">Jeu vidéo inspiré de Wolfenstein avec la technique du Raycasting. Application des concepts mathématiques et graphiques à la programmation de jeux en C.</p>
+                    <div class="project-tags">
+                        <span class="tag">C</span>
+                        <span class="tag">Raycasting</span>
+                        <span class="tag">Jeu vidéo</span>
                     </div>
                 </div>
-                
                 <div class="project-card">
-                    <div class="project-img">
-                        [Image à venir]
-                    </div>
-                    <div class="project-content">
-                        <a href="https://github.com/Nxva83/Chocolatine"class="project-title">Chocolatine</a>
-                        <p>Système de tests automatisés par GitHub Actions pour prévenir les oublis dans le code source. Ce projet m'a permis de mettre en place une intégration continue et de comprendre l'importance des tests automatisés.</p>
-                        <div class="project-tags">
-                            <span class="tag">CI/CD</span>
-                            <span class="tag">GitHub Actions</span>
-                            <span class="tag">Tests</span>
-                        </div>
+                    <div class="project-num">Projet 04</div>
+                    <a href="https://github.com/Nxva83/Chocolatine" class="project-title">Chocolatine</a>
+                    <p class="project-desc">Système de tests automatisés via GitHub Actions pour prévenir les régressions dans le code source. Mise en place d'une pipeline d'intégration continue complète.</p>
+                    <div class="project-tags">
+                        <span class="tag">CI/CD</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">Tests</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section id="education" style="background-color: rgba(79, 195, 220, 0.05);">
+
+    <!-- EDUCATION -->
+    <section id="education">
         <div class="container">
-            <h2>Formation</h2>
-            <div class="education-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-year">2024 - 2029</div>
-                    <div class="timeline-content">
+            <div class="section-header">
+                <span class="section-label">04 — Parcours</span>
+                <h2 class="section-title">Formation</h2>
+            </div>
+            <div class="edu-list">
+                <div class="edu-item">
+                    <div class="edu-year">2024 — 2029</div>
+                    <div class="edu-content">
                         <h3>Programme Grande École</h3>
-                        <p>Epitech</p>
-                        <p>Formation d'expert en technologies de l'information avec une pédagogie par projets.</p>
+                        <div class="edu-org">Epitech · Nice</div>
+                        <p class="edu-desc">Formation d'expert en technologies de l'information. Pédagogie par projets avec un focus sur la pratique, l'autonomie et l'innovation.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-year">Formation continue</div>
-                    <div class="timeline-content">
-                        <h3>Certification Animateur d'Activités pour la Jeunesse</h3>
-                        <p>Organisation d'événements et animation de groupes de jeunes.</p>
+                <div class="edu-item">
+                    <div class="edu-year">Formation continue</div>
+                    <div class="edu-content">
+                        <h3>Animateur d'Activités pour la Jeunesse</h3>
+                        <div class="edu-org">Certification officielle</div>
+                        <p class="edu-desc">Organisation d'événements et animation de groupes de jeunes. Développement des compétences en leadership et communication.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-year">Compétence</div>
-                    <div class="timeline-content">
-                        <h3>Formation aux premiers secours</h3>
-                        <p>Connaissances de base en premiers secours.</p>
+                <div class="edu-item">
+                    <div class="edu-year">Certification</div>
+                    <div class="edu-content">
+                        <h3>Formation aux Premiers Secours</h3>
+                        <div class="edu-org">PSC1</div>
+                        <p class="edu-desc">Maîtrise des gestes de premiers secours en situation d'urgence.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- CONTACT -->
     <section id="contact">
-        <div class="container">
-            <h2>Contact</h2>
-            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-                <p>N'hésitez pas à me contacter pour discuter de projets, d'opportunités de collaboration ou pour toute autre question.</p>
-                <div class="contact-info" style="margin-top: 30px; justify-content: center;">
-                    <a href="mailto:gabriel.spanneut-peressutti@epitech.eu" style="color: var(--secondary-color);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                        </svg>
-                        gabriel.spanneut-peressutti@epitech.eu
-                    </a>
-                    <a href="tel:+33617750003" style="color: var(--secondary-color);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611https://www.canva.com/design/DAGXNAXQY5Q/iyhcVE-8Zzl5I0YLfA9NJw/edit?utm_content=DAGXNAXQY5Q&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+        <div>
+            <h2 class="contact-big">Travaillons<br>ensemble <em>—</em></h2>
+        </div>
+        <div class="contact-links">
+            <a href="mailto:gabriel.spanneut-peressutti@epitech.eu" class="contact-link">
+                <div class="contact-link-icon">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>
+                </div>
+                <div class="contact-link-text">
+                    <span class="cl-label">Email</span>
+                    <span class="cl-value">gabriel.spanneut-peressutti@epitech.eu</span>
+                </div>
+            </a>
+            <a href="tel:+33617750003" class="contact-link">
+                <div class="contact-link-icon">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>
+                </div>
+                <div class="contact-link-text">
+                    <span class="cl-label">Téléphone</span>
+                    <span class="cl-value">06 17 75 00 03</span>
+                </div>
+            </a>
+            <div class="contact-link">
+                <div class="contact-link-icon">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                </div>
+                <div class="contact-link-text">
+                    <span class="cl-label">Localisation</span>
+                    <span class="cl-value">06200 Nice, France</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>© 2025 Gabriel Spanneut-Peressutti</span>
+        <span>Epitech Nice · Programme Grande École</span>
+    </footer>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Intersection observer for subtle reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.style.opacity = '1';
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.project-card, .edu-item, .skill-block').forEach(el => {
+            el.style.transition = 'opacity 0.6s ease, transform 0.3s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
