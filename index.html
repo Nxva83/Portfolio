@@ -27,7 +27,6 @@
             font-family: 'DM Sans', sans-serif;
             font-weight: 300;
             line-height: 1.7;
-            cursor: none;
         }
 
         /* Custom cursor */
@@ -86,7 +85,6 @@
             text-decoration: none;
             font-weight: 400;
             transition: color 0.2s;
-            cursor: none;
         }
         .nav-links a:hover { color: var(--rust); }
 
@@ -179,7 +177,6 @@
             font-family: 'Syne', sans-serif;
             font-weight: 600;
             transition: background 0.3s, gap 0.3s;
-            cursor: none;
             align-self: flex-start;
         }
         .hero-cta:hover { background: var(--rust); gap: 1.4rem; }
@@ -372,7 +369,6 @@
             position: relative;
             overflow: hidden;
             transition: background 0.3s;
-            cursor: none;
         }
         .project-card:nth-child(2n) { border-right: none; }
         .project-card:nth-last-child(-n+2) { border-bottom: none; }
@@ -403,7 +399,6 @@
             display: block;
             margin-bottom: 1rem;
             transition: color 0.2s;
-            cursor: none;
         }
         .project-title:hover { color: var(--rust); }
         .project-desc {
@@ -501,7 +496,6 @@
             padding: 1.2rem 1.5rem;
             border: 1px solid var(--border);
             transition: border-color 0.3s, background 0.3s;
-            cursor: none;
         }
         .contact-link:hover {
             border-color: var(--rust);
@@ -582,8 +576,8 @@
 </head>
 <body>
 
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="cursor" id="cursor" style="display:none"></div>
+    <div class="cursor-ring" id="cursor-ring" style="display:none"></div>
 
     <nav>
         <div class="nav-logo">GSP</div>
@@ -873,12 +867,18 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const cursor = document.getElementById('cursor');
         const ring = document.getElementById('cursor-ring');
-        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let ringX = mouseX, ringY = mouseY;
+
+        cursor.style.opacity = '0';
+        ring.style.opacity = '0';
 
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX; mouseY = e.clientY;
             cursor.style.left = mouseX + 'px';
             cursor.style.top = mouseY + 'px';
+            cursor.style.opacity = '1';
+            ring.style.opacity = '0.5';
         });
 
         function animateRing() {
